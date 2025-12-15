@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Carta al Viejo Pascuero</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #b30000, #006400);
+      min-height: 100vh;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .card {
+      background: #fffaf0;
+      width: 90%;
+      max-width: 500px;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      text-align: center;
+    }
+
+    h1 {
+      color: #b30000;
+      margin-bottom: 10px;
+    }
+
+    p {
+      color: #333;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+
+    textarea {
+      resize: none;
+      height: 120px;
+    }
+
+    button {
+      margin-top: 20px;
+      background: #b30000;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      font-size: 16px;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #8c0000;
+    }
+
+    .success {
+      display: none;
+      color: green;
+      font-weight: bold;
+      margin-top: 15px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h1>🎅 Carta al Viejo Pascuero</h1>
+    <p>Escribe aquí tus deseos y serán enviados directamente al Polo Norte ✨</p>
+
+    <form id="cartaForm">
+      <input type="text" id="nombre" placeholder="Tu nombre" required />
+      <textarea id="deseos" placeholder="Querido Viejo Pascuero, este año me gustaría recibir..." required></textarea>
+      <button type="submit">🎁 Enviar carta</button>
+    </form>
+
+    <div class="success">¡Tu carta fue enviada con éxito! 🎄</div>
+  </div>
+
+  <script>
+    const form = document.getElementById('cartaForm');
+    const successMsg = document.querySelector('.success');
+
+    // AQUÍ DEBES PEGAR TU URL DE FORMSPREE / SHEETDB / BACKEND
+    const ENDPOINT = "https://formspree.io/f/xrbndjqw";
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const data = {
+        nombre: document.getElementById('nombre').value,
+        deseos: document.getElementById('deseos').value
+      };
+
+      try {
+        await fetch(ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+
+        form.reset();
+        successMsg.style.display = 'block';
+      } catch (error) {
+        alert('Error al enviar la carta 😢');
+      }
+    });
+  </script>
+
+</body>
+</html>
